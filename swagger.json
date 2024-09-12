@@ -1,0 +1,160 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API de Livros",
+    "description": "Uma API simples para gerenciar livros."
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "paths": {
+    "/books": {
+      "get": {
+        "summary": "Listar todos os livros",
+        "description": "Retorna uma lista de todos os livros cadastrados.",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Uma lista de livros",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Book"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Adicionar um novo livro",
+        "description": "Adiciona um novo livro à coleção.",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "book",
+            "description": "Dados do novo livro",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Livro criado com sucesso"
+          }
+        }
+      }
+    },
+    "/books/{id}": {
+      "get": {
+        "summary": "Obter detalhes de um livro",
+        "description": "Retorna os detalhes de um livro específico com base no ID.",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do livro",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do livro",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          },
+          "404": {
+            "description": "Livro não encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um livro",
+        "description": "Atualiza os detalhes de um livro existente com base no ID.",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do livro",
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "book",
+            "description": "Dados atualizados do livro",
+            "schema": {
+              "$ref": "#/definitions/Book"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Livro atualizado com sucesso"
+          },
+          "404": {
+            "description": "Livro não encontrado"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Excluir um livro",
+        "description": "Remove um livro com base no ID.",
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "ID do livro",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Livro excluído com sucesso"
+          },
+          "404": {
+            "description": "Livro não encontrado"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Book": {
+      "type": "object",
+      "required": ["title", "author"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID do livro"
+        },
+        "title": {
+          "type": "string",
+          "description": "Título do livro"
+        },
+        "author": {
+          "type": "string",
+          "description": "Autor do livro"
+        },
+        "year": {
+          "type": "integer",
+          "description": "Ano de publicação"
+        },
+        "genre": {
+          "type": "string",
+          "description": "Gênero do livro"
+        }
+      }
+    }
+  }
+}
